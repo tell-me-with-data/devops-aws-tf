@@ -1,3 +1,13 @@
+terraform {
+  cloud {
+    organization = "tell-me-with-data"
+
+    workspaces {
+      name = "proj-workspace-1"
+    }
+  }
+}
+
 provider "aws" {
   region = "sa-east-1"
 }
@@ -106,9 +116,9 @@ resource "aws_eip" "proj_eip" {
 }
 
 resource "aws_instance" "proj_instance" {
-  ami               = "ami-0a729bdc1acf7528b"
-  instance_type     = "t2.micro"
-  key_name          = "slayer-dev-machine"
+  ami           = "ami-0a729bdc1acf7528b"
+  instance_type = "t2.micro"
+  key_name      = "slayer-dev-machine"
   network_interface {
     device_index         = 0
     network_interface_id = aws_network_interface.proj_network_interface.id
