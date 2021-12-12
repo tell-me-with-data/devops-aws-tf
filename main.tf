@@ -2,8 +2,6 @@ provider "aws" {
   region = "sa-east-1"
 }
 
-# Step 1
-
 resource "aws_vpc" "proj_vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
@@ -11,16 +9,12 @@ resource "aws_vpc" "proj_vpc" {
   }
 }
 
-# Step 2
-
 resource "aws_internet_gateway" "proj_internet_gateway" {
   vpc_id = aws_vpc.proj_vpc.id
   tags = {
     Name = "Proj_Internet_Gateway"
   }
 }
-
-# Step 3
 
 resource "aws_route_table" "proj_route_table" {
   vpc_id = aws_vpc.proj_vpc.id
@@ -41,8 +35,6 @@ resource "aws_route_table" "proj_route_table" {
 
 }
 
-# Step 4
-
 resource "aws_subnet" "proj_subnet" {
   vpc_id     = aws_vpc.proj_vpc.id
   cidr_block = "10.0.1.0/24"
@@ -51,14 +43,10 @@ resource "aws_subnet" "proj_subnet" {
   }
 }
 
-# Step 5
-
 resource "aws_route_table_association" "proj_route_table_association" {
   subnet_id      = aws_subnet.proj_subnet.id
   route_table_id = aws_route_table.proj_route_table.id
 }
-
-# Step 6
 
 resource "aws_security_group" "proj_security_group" {
   name        = "allow_web_traffic"
@@ -102,15 +90,11 @@ resource "aws_security_group" "proj_security_group" {
 
 }
 
-# Step 7
-
 resource "aws_network_interface" "proj_network_interface" {
   subnet_id       = aws_subnet.proj_subnet.id
   private_ips     = ["10.0.1.50"]
   security_groups = [aws_security_group.proj_security_group.id]
 }
-
-# Step 8
 
 resource "aws_eip" "proj_eip" {
   vpc                       = true
@@ -120,8 +104,6 @@ resource "aws_eip" "proj_eip" {
     aws_internet_gateway.proj_internet_gateway
   ]
 }
-
-# Step 9
 
 resource "aws_instance" "proj_instance" {
   ami               = "ami-0a729bdc1acf7528b"
@@ -144,26 +126,3 @@ resource "aws_instance" "proj_instance" {
     Name = "Proj_Instance"
   }
 }
-
-# resource "aws_subnet" "first_subnet" {
-#   vpc_id     = aws_vpc.first_vpc.id
-#   cidr_block = "10.0.1.0/24"
-#   tags = {
-#     Name = "Prod_SubNet"
-#   }
-# }
-
-# resource "aws_vpc" "first_vpc" {
-#   cidr_block = "10.0.0.0/16"
-#   tags = {
-#     Name = "Prod_VPC"
-#   }
-# }
-
-# resource "aws_instance" "my_first_server" {
-#   ami           = "ami-0a729bdc1acf7528b"
-#   instance_type = "t2.micro"
-#   tags = {
-#     # Name = "ubuntu_16.04"
-#   }
-# }
