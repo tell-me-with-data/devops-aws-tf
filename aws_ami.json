@@ -18,7 +18,7 @@
       },
       "instance_type": "t2.micro",
       "ssh_username": "ubuntu",
-      "ami_name": "ubuntu-docker-18-demo"
+      "ami_name": "ubuntu-docker-16-demo"
     }
   ],
   "provisioners": [
@@ -36,6 +36,10 @@
     {
       "type": "shell",
       "script": "install_docker.sh"
+    },
+    {
+      "type": "shell",
+      "script": "rootless_docker.sh"
     }
   ]
 }
