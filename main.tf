@@ -2,7 +2,14 @@ provider "aws" {
   region = "sa-east-1"
 }
 
-
+resource "aws_instance" "tell_me_1_dev" {
+  ami           = "ami-09ed4bb0f78259804"
+  instance_type = "t2.micro"
+  tags = {
+    Name       = "Tell_Me_1_Dev"
+    Enviroment = "Dev"
+  }
+}
 
 
 # # Step 1

@@ -9,7 +9,7 @@
       "access_key": "{{user `aws_access_key`}}",
       "secret_key": "{{user `aws_secret_key`}}",
       "region": "sa-east-1",
-      "source_ami": "ami-0281045cf0d677d4f",
+      "source_ami": "ami-005098249eaff8e58",
       "source_ami_filter": {
         "owners": [
           "309486230773"
@@ -18,7 +18,7 @@
       },
       "instance_type": "t2.micro",
       "ssh_username": "ubuntu",
-      "ami_name": "ubuntu-docker-16-demo"
+      "ami_name": "ubuntu-docker-18-demo"
     }
   ],
   "provisioners": [
@@ -39,7 +39,10 @@
     },
     {
       "type": "shell",
-      "script": "rootless_docker.sh"
+      "inline": [
+        "sudo usermod -aG docker $USER",
+        "newgrp docker"
+      ]
     }
   ]
 }
