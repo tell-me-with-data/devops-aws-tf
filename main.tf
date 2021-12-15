@@ -2,9 +2,19 @@ provider "aws" {
   region = "sa-east-1"
 }
 
+variable "v_ami_id" {
+  default = "ami-09ed4bb0f78259804"
+  description = "AMI ID of ubuntu-docker-18-demo"
+}
+
+variable "v_instance_type" {
+  default = "t2.micro"
+  description = "Instace Type of aws instance"
+}
+
 resource "aws_instance" "tell_me_1_dev" {
-  ami           = "ami-09ed4bb0f78259804"
-  instance_type = "t2.micro"
+  ami           = var.v_ami_id
+  instance_type = var.v_instance_type
   tags = {
     Name       = "Tell_Me_1_Dev"
     Enviroment = "Dev"
